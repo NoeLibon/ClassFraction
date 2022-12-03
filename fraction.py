@@ -19,12 +19,12 @@ class Fraction:
             raise ZeroDivisionError('division par zéro interdite')
         if type(num) != int or type(den) != int:
             raise TypeError('les paramètres doivent être des entiers')
-        if num > 0 > den or num < 0 and den < 0:
+        if den < 0:
             num = -num
             den = -den
-        self.__gcd = math.gcd(num, den)
-        self.__numerator = num / self.__gcd
-        self.__denominator = den / self.__gcd
+        gcd = math.gcd(num, den)
+        self.__numerator = num / gcd
+        self.__denominator = den / gcd
 
     @property
     def numerator(self):
@@ -42,12 +42,6 @@ class Fraction:
         PRE : ?
         POST : ?
         """
-        if not self.numerator:
-            return '0'
-        if self.numerator == self.denominator:
-            return '1'
-        if self.numerator == -self.denominator:
-            return '-1'
         if self.denominator == 1:
             return f'{self.numerator}'
         return f'{self.numerator}/{self.denominator}'
@@ -60,7 +54,15 @@ class Fraction:
         PRE : ?
         POST : ?
         """
-        pass
+        if self.denominator == 1:
+            return f'{self.numerator}'
+        if abs(self.numerator) < abs(self.denominator):
+            return f'{self.numerator}/{self.denominator}'
+        whole_number = abs(self.numerator) // abs(self.denominator)
+        new_numerator = abs(self.numerator) % abs(self.denominator)
+        if self.numerator < 0:
+            return f'-{whole_number}-{new_numerator}/{self.denominator}'
+        return f'{whole_number}+{new_numerator}/{self.denominator}'
 
     # ------------------ Operators overloading ------------------
 
@@ -70,9 +72,9 @@ class Fraction:
          PRE : ?
          POST : ?
          """
-        lcm = math.lcm(self.denominator, other.denominator)
-        new_numerator = self.numerator * (lcm / self.denominator) + other.numerator * (lcm / other.denominator)
-        new_denominator = self.denominator * (lcm / self.denominator)
+        new_denominator = math.lcm(self.denominator, other.denominator)
+        new_numerator = self.numerator * (new_denominator / self.denominator) + other.numerator * (new_denominator /
+                                                                                                   other.denominator)
         return Fraction(num=int(new_numerator), den=int(new_denominator))
 
     def __sub__(self, other):
@@ -81,9 +83,9 @@ class Fraction:
         PRE : ?
         POST : ?
         """
-        lcm = math.lcm(self.denominator, other.denominator)
-        new_numerator = self.numerator * (lcm / self.denominator) - other.numerator * (lcm / other.denominator)
-        new_denominator = self.denominator * (lcm / self.denominator)
+        new_denominator = math.lcm(self.denominator, other.denominator)
+        new_numerator = self.numerator * (new_denominator / self.denominator) - other.numerator * (new_denominator /
+                                                                                                   other.denominator)
         return Fraction(num=int(new_numerator), den=int(new_denominator))
 
     def __mul__(self, other):
@@ -112,7 +114,11 @@ class Fraction:
         PRE : ?
         POST : ?
         """
-        pass
+        if other.__float__() != int(other.__float__()):
+            raise TypeError('les puissances de fractions ne sont pas autorisées')
+        new_numerator = self.numerator ** other.__float__()
+        new_denominator = self.denominator ** other.__float__()
+        return Fraction(num=int(new_numerator), den=int(new_denominator))
 
     def __eq__(self, other):
         """Overloading of the == operator for fractions
