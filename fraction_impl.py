@@ -14,7 +14,7 @@ class Fraction:
 
         PRE : num et den sont des nombres
         POST : crée le numérateur et le dénominateur sous leur forme réduite
-        RAISES : ZeroDivisionError si den==0
+        RAISES : ZeroDivisionError si den==0, TypeError si num ou den ne sont pas des entiers
         """
         if not den:
             raise ZeroDivisionError('division par zéro interdite')
