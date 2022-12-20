@@ -115,9 +115,13 @@ class Fraction:
         """Overloading of the ** operator for fractions
 
         PRE : self et other sont des objets de type Fraction
-        POST : renvoie un float du résultat de self exposant other
+        POST : renvoie un objet de type Fraction correspondant à self exposant other
         """
-        return (self.numerator / self.denominator) ** (other.numerator / other.denominator)
+        new_numerator = self.numerator ** (other.numerator / other.denominator)
+        new_denominator = self.denominator ** (other.numerator / other.denominator)
+        if new_numerator == int(new_numerator) and new_denominator == int(new_denominator):
+            return Fraction(num=int(new_numerator), den=int(new_denominator))
+        return Fraction(num=new_numerator, den=new_denominator)
 
     def __eq__(self, other):
         """Overloading of the == operator for fractions

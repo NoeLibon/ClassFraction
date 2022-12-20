@@ -12,23 +12,19 @@ class Fraction:
     def __init__(self, num=0, den=1):
         """This builds a fraction based on some numerator and denominator.
 
-        PRE : num et den sont des entiers, den est non nul
+        PRE : num et den sont des entiers
         POST : crée le numérateur et le dénominateur sous leur forme simplifiée
+        RAISES : ZeroDivisionError si den est égal 0
         """
-        if den < 0:
-            num = -num
-            den = -den
-        gcd = math.gcd(num, den)
-        self.__numerator = num / gcd
-        self.__denominator = den / gcd
+        pass
 
     @property
     def numerator(self):
-        return int(self.__numerator)
+        pass
 
     @property
     def denominator(self):
-        return int(self.__denominator)
+        pass
 
     # ------------------ Textual representations ------------------
 
@@ -74,8 +70,7 @@ class Fraction:
 
 
         PRE : self et autre sont des objets de type Fraction
-        POST : renvoie la somme de self et autre en int si le
-        résultat de celle-ci correspond à un entier, sinon renvoie la somme en float
+        POST : renvoie la somme de self et autre sous forme d'un objet de type Fraction
         """
         nouv_den = math.lcm(self.denominator, autre.denominator)
         nouv_num = self.numerator * (nouv_den / self.denominator) + autre.numerator * (nouv_den / autre.denominator)
@@ -89,8 +84,7 @@ class Fraction:
         """Overloading of the - operator for fractions
 
         PRE : self et autre sont des objets de type Fraction
-        POST : renvoie la différence de self et autre en int si le
-        résultat de celle-ci correspond à un entier, sinon renvoie la différence en float
+        POST : renvoie la différence de self et autre sous forme d'un objet de type Fraction
         """
         nouv_den = math.lcm(self.denominator, autre.denominator)
         nouv_num = self.numerator * (nouv_den / self.denominator) - autre.numerator * (nouv_den / autre.denominator)
@@ -104,8 +98,7 @@ class Fraction:
         """Overloading of the * operator for fractions
 
         PRE : self et autre sont des objets de type Fraction
-        POST : renvoie la multiplication de self et autre en int si le
-        résultat de celle-ci correspond à un entier, sinon renvoie la multiplication en float
+        POST : renvoie la multiplication de self et autre sous forme d'un objet de type Fraction
         """
         nouv_den = self.denominator * autre.denominator
         nouv_num = self.numerator * autre.numerator
@@ -119,23 +112,15 @@ class Fraction:
         """Overloading of the / operator for fractions
 
         PRE : self et autre sont des objets de type Fraction
-        POST : renvoie la division de self et autre en int si le
-        résultat de celle-ci correspond à un entier, sinon renvoie la division en float
+        POST : renvoie une instance Fraction qui correspond à la division de l'objet self par l'objet autre
         """
-        nouv_den = self.denominator * autre.numerator
-        nouv_num = self.numerator * autre.denominator
-        nouv_frac = nouv_num / nouv_den
-        if nouv_frac == int(nouv_frac):
-            return int(nouv_frac)
-        else:
-            return nouv_frac
+        pass
 
     def __pow__(self, autre):
         """Overloading of the ** operator for fractions
 
         PRE : self et autre sont des objets de type Fraction
-        POST : renvoie le résultat de self exposant autre en int si
-        celui-ci correspond à un entier, sinon renvoie le résultat en float
+        POST : renvoie la puissance de self par autre sous forme d'un objet de type Fraction
         """
         nouv_den = self.denominator ** (autre.numerator / autre.denominator)
         nouv_num = self.numerator ** (autre.numerator / autre.denominator)
@@ -218,13 +203,8 @@ class Fraction:
         Two fractions are adjacents if the absolute value of the difference them is a unit fraction
 
         PRE : self et autre sont des objets de type Fraction
-        POST : renvoie "adjacent" si la valeur absolue du
-        numérateur de la différence de self et autre est = à 1, sinon renvoie "pas adjacent"
+        POST : crée une instance Fraction qui correspond à la
+        différence de l'objet self et de l'objet autre, et renvoie "adjacent" si la valeur absolue du numérateur de
+        cette différence est égal à 1, sinon renvoie "n'est pas adjacent"
         """
-        nouv_den = math.lcm(self.denominator, autre.denominator)
-        nouv_num = self.numerator * (nouv_den / self.denominator) - autre.numerator * (nouv_den / autre.denominator)
-        nouv_frac = Fraction(num=nouv_num, den=nouv_den)
-        if abs(nouv_frac.numerator) == 1:
-            return "adjacent"
-        else:
-            return "pas adjacent"
+        pass
