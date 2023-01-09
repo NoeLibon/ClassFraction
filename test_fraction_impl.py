@@ -14,6 +14,12 @@ class FractionTestCase(unittest.TestCase):
             Fraction(num=5, den=4.5)
         with self.assertRaises(TypeError):
             Fraction(num=-5.3, den=4.5)
+        self.assertEqual(Fraction(num=6, den=8).numerator, 3)
+        self.assertEqual(Fraction(num=6, den=8).denominator, 4)
+        self.assertEqual(Fraction(num=0, den=8).numerator, 0)
+        self.assertEqual(Fraction(num=0, den=8).denominator, 1)
+        self.assertEqual(Fraction(num=-15, den=6).numerator, -5)
+        self.assertEqual(Fraction(num=-15, den=6).denominator, 2)
 
     def test_str(self):
         self.assertEqual(Fraction(num=12, den=3).__str__(), '4')
@@ -45,6 +51,8 @@ class FractionTestCase(unittest.TestCase):
         self.assertEqual((Fraction(num=5, den=6) / Fraction(num=4, den=7)).__str__(), '35/24')
         self.assertEqual((Fraction(num=7, den=-8) / Fraction(num=-4, den=-7)).__str__(), '-49/32')
         self.assertEqual((Fraction(num=0, den=42) / Fraction(num=13, den=25)).__str__(), '0')
+        with self.assertRaises(ZeroDivisionError):
+            (Fraction(num=5, den=2) / Fraction(num=0, den=6)).__str__()
 
     def test_pow(self):
         with self.assertRaises(TypeError):
